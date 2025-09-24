@@ -1,7 +1,10 @@
 <template>
   <nav class="menu-container">
-    <a
+    <router-link
+      :exact="true"
+      exact-active-class="selected"
       v-for="item in items"
+      :to="item.link"
       :key="item.link"
       :href="item.link"
       :class="{
@@ -12,7 +15,7 @@
         <Icon :type="item.icon" />
       </div>
       <span>{{ item.title }}</span>
-    </a>
+    </router-link>
   </nav>
 </template>
 
@@ -54,17 +57,6 @@ export default {
       ],
     };
   },
-  methods: {
-    isSelected(item) {
-      var link = item.link.toLowerCase(); // 菜单的链接地址
-      var curPathname = location.pathname.toLowerCase(); // 当前浏览器的访问路径
-      if (item.startWith) {
-        return curPathname.startsWith(link);
-      } else {
-        return curPathname === link;
-      }
-    },
-  },
 };
 </script>
 
@@ -91,4 +83,3 @@ export default {
   }
 }
 </style>
-
