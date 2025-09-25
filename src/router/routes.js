@@ -5,10 +5,10 @@ import Message from "@/views/Message";
 import Project from "@/views/Project";
 
 const routes = [
-  { path: "/about", component: About },
-  { path: "/blog", component: Blog },
-  { path: "/", component: Home },
-  { path: "/message", component: Message },
-  { path: "/project", component: Project },
-]
+  { name: "About", path: "/about", component: About },
+  { name: "Blog", path: "/blog", component: Blog },
+  { name: "Home", path: "/", component: Home },
+  { name: "Message", path: "/message", component: Message },
+  { name: "Project", path: "/project", component: Project },
+];
 export default routes;

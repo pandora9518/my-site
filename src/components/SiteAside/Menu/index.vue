@@ -2,14 +2,11 @@
   <nav class="menu-container">
     <router-link
       :exact="true"
-      exact-active-class="selected"
+      active-class="selected"
       v-for="item in items"
-      :to="item.link"
+      :to="{ name: item.name }"
       :key="item.link"
       :href="item.link"
-      :class="{
-        selected: isSelected(item),
-      }"
     >
       <div class="icon">
         <Icon :type="item.icon" />
@@ -29,28 +26,28 @@ export default {
     return {
       items: [
         {
-          link: "/",
+          name: "Home",
           title: "首页",
           icon: "home",
         },
         {
-          link: "/blog",
+          name: "Blog",
           title: "文章",
           icon: "blog",
-          startWith: true, // 只要当前路径以link开头，当前菜单就是选中的
         },
         {
-          link: "/about",
+          name: "About",
           title: "关于我",
           icon: "about",
+          name: "About",
         },
         {
-          link: "/project",
+          name: "Project",
           title: "项目&效果",
           icon: "code",
         },
         {
-          link: "/message",
+          name: "Message",
           title: "留言板",
           icon: "chat",
         },
