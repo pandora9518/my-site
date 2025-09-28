@@ -1,6 +1,6 @@
 # Avatar
 
-<img src="http://mdrs.yuanjin.tech/img/20201130153821.png" alt="image-20201130153821293" style="zoom:50%;" />
+<img src="../assets/avatar.jpg" alt="image-20201130153821293" style="zoom:50%;" />
 
 ## 属性
 
@@ -91,7 +91,7 @@
 
 # Contact
 
-<img src="http://mdrs.yuanjin.tech/img/20201130165641.gif" alt="iShot2020-11-30下午04.55.47" style="zoom:40%;" />
+<img src="../assets/contact.png" alt="iShot2020-11-30下午04.55.47" style="zoom:40%;" />
 
 该组件需要横向撑满容器，背景色透明
 
@@ -143,7 +143,7 @@
 
 # SiteAside
 
-<img src="http://mdrs.yuanjin.tech/img/20201130200148.png" alt="image-20201130200148681" style="zoom:33%;" />
+<img src="../assets/siteAside.png" alt="image-20201130200148681" style="zoom:33%;" />
 
 网站侧边栏
 

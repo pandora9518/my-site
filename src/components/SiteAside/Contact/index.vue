@@ -5,25 +5,25 @@
         <div class="icon">
           <Icon type="github" />
         </div>
-        <span>DuYi-Edu</span>
+        <span>慕牧mu</span>
       </a>
     </li>
     <li>
-      <a href="mailto:23423424234@qq.com">
+      <a href="mailto:1744753754@qq.com">
         <div class="icon">
           <Icon type="mail" />
         </div>
-        <span>23423424234@qq.com</span>
+        <span>1744753754@qq.com</span>
       </a>
     </li>
     <li>
       <a
-        href="tencent://message/?Menu=yes&uin=3263023350&Service=300&sigT=45a1e5847943b64c6ff3990f8a9e644d2b31356cb0b4ac6b24663a3c8dd0f8aa12a595b1714f9d45"
+        href="tencent://message/?Menu=yes&uin=1744753754&Service=300&sigT=45a1e5847943b64c6ff3990f8a9e644d2b31356cb0b4ac6b24663a3c8dd0f8aa12a595b1714f9d45"
       >
         <div class="icon">
           <Icon type="qq" />
         </div>
-        <span>3263023350</span>
+        <span>1744753754</span>
       </a>
       <div class="pop">
         <img
@@ -37,7 +37,7 @@
         <div class="icon weixin">
           <Icon type="weixin" />
         </div>
-        <span>dsfggasas</span>
+        <span>mu15337467224</span>
       </a>
       <div class="pop">
         <img
