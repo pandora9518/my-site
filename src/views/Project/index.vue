@@ -1,13 +1,10 @@
 <template>
-  <h1>这里是项目</h1>
+  <h1>项目&amp;效果</h1>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style>
+<style></style>
 
-</style>

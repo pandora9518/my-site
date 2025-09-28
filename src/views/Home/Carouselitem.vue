@@ -1,5 +1,7 @@
 <template>
-  
+  <div class="carouselitem-container">
+    carouselitem
+  </div>
 </template>
 
 <script>

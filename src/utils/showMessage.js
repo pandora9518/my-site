@@ -14,9 +14,8 @@ export default function (options = {}) {
   const duration = options.duration || 2000;
   const container = options.container || document.body;
   const iconDom = getComponentRootDom(Icon, { type });
-  iconDom.classList.add(`${styles.icon}`);
   const div = document.createElement("div");
-  div.innerHTML = `<div>${iconDom.outerHTML}<span>${content}</span></div>`;
+  div.innerHTML = `<span class="${styles.icon}">${iconDom.outerHTML}</span><div>${content}</div>`;
   const messageType = styles[`message-${type}`];
   div.className = `${styles.message} ${messageType}`;
   if (!container) {
@@ -28,4 +27,21 @@ export default function (options = {}) {
     }
   }
   container.appendChild(div);
+  div.clientHeight; //强制渲染
+  div.style.opacity = 1;
+  div.style.transform = `translate(-50%, -50%)`;
+
+  setTimeout(() => {
+    div.style.opacity = 0;
+    div.style.transform = `translate(-50%,-50%) translateY(-25px)`;
+    div.addEventListener(
+      "transitionend",
+      function() {
+        div.remove();
+        // 运行回调函数
+        options.callback && options.callback();
+      },
+      { once: true }
+    );
+  }, duration);
 }
