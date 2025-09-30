@@ -1,5 +1,10 @@
 <template>
-  <div class="home-container" ref="container" @wheel="handleWheel">
+  <div
+    class="home-container"
+    ref="container"
+    v-loading="isLoading"
+    @wheel="handleWheel"
+  >
     <ul
       class="carouselitem-container"
       :style="{
@@ -45,6 +50,7 @@ export default {
   },
   data() {
     return {
+      isLoading: true,
       bannerList: [],
       index: 0, //当前轮播图索引
       containerHeight: 0,
@@ -58,6 +64,7 @@ export default {
   },
   async created() {
     this.bannerList = await getBanners();
+    this.isLoading = false;
   },
   mounted() {
     this.containerHeight = this.$refs.container.clientHeight;

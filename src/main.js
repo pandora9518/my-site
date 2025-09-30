@@ -5,6 +5,8 @@ import router from "@/router/index.js";
 import showMessage from "@/utils/showMessage";
 
 import "@/mock/index.js";
+import Loading from "@/directives/loading.js";
+Vue.directive("loading", Loading);
 Vue.prototype.$showMessage = showMessage;
 new Vue({
   router,
