@@ -4,7 +4,6 @@
 
 <script>
 import RightList from "./RightList";
-import router from "@/router";
 export default {
   components: {
     RightList,
@@ -46,4 +45,3 @@ export default {
 </script>
 
 <style></style>
-

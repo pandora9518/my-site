@@ -3,19 +3,26 @@
     <ul>
       <li v-for="item in data.rows" :key="item.id">
         <div class="thumb" v-if="item.thumb">
-          <a href="">
+          <RouterLink :to="{ name: 'Detail', params: { id: item.id } }">
             <img :src="item.thumb" :alt="item.title" :title="item.title" />
-          </a>
+          </RouterLink>
         </div>
         <div class="main">
-          <a href="">
+          <RouterLink :to="{ name: 'Detail', params: { id: item.id } }">
             <h2>{{ item.title }}</h2>
-          </a>
+          </RouterLink>
           <div class="aside">
             <span>日期：{{ formatDate(item.createDate) }}</span>
             <span>浏览：{{ item.scanNumber }}</span>
             <span>评论：{{ item.commentNumber }}</span>
-            <a href="/article/cate/8" class="">{{ item.category.name }}</a>
+            <RouterLink
+              :to="{
+                name: 'CategoryBlog',
+                params: { categoryId: item.category.id },
+              }"
+              class=""
+              >{{ item.category.name }}</RouterLink
+            >
           </div>
           <div class="desc">
             {{ item.description }}
@@ -39,7 +46,7 @@
 import Pager from "@/components/Pager";
 import fetchData from "@/mixins/fetchData.js";
 import { getBlogs } from "@/api/blog.js";
-import { formatDate } from "@/utils/formatDate";
+import formatDate from "@/utils";
 export default {
   mixins: [fetchData({})],
   components: {
