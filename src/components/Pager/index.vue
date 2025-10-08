@@ -1,29 +1,33 @@
 <template>
+  <!-- 只有总页数大于1时才显示 -->
   <div class="pager-container" v-if="pageNumber > 1">
-    <a @click="handleClick(1)" :class="{ disabled: current === 1 }"
-      >|&lt;&lt;</a
-    >
-    <a @click="handleClick(current - 1)" :class="{ disabled: current === 1 }"
-      >&lt;&lt;</a
-    >
+    <a @click="handleClick(1)" :class="{ disabled: current === 1 }">
+      |&lt;&lt;
+    </a>
+    <a @click="handleClick(current - 1)" :class="{ disabled: current === 1 }">
+      &lt;&lt;
+    </a>
     <a
       @click="handleClick(n)"
       v-for="(n, i) in numbers"
       :key="i"
-      :class="{ active: current === n }"
+      :class="{ active: n === current }"
     >
       {{ n }}
     </a>
+
     <a
       @click="handleClick(current + 1)"
       :class="{ disabled: current === pageNumber }"
-      >&gt;&gt;</a
     >
+      &gt;&gt;
+    </a>
     <a
       @click="handleClick(pageNumber)"
       :class="{ disabled: current === pageNumber }"
-      >&gt;&gt;|</a
     >
+      &gt;&gt;|
+    </a>
   </div>
 </template>
 
@@ -36,7 +40,7 @@ export default {
     },
     total: {
       type: Number,
-      default: 10,
+      default: 0,
     },
     limit: {
       type: Number,
@@ -90,10 +94,8 @@ export default {
   },
 };
 </script>
-
 <style lang="less" scoped>
 @import "~@/styles/var.less";
-
 .pager-container {
   display: flex;
   justify-content: center;
@@ -101,14 +103,15 @@ export default {
   a {
     color: @primary;
     margin: 0 6px;
+    cursor: pointer;
+    &.disabled {
+      color: @lightWords;
+      cursor: not-allowed;
+    }
     &.active {
       color: @words;
       font-weight: bold;
       cursor: text;
-    }
-    &.disabled {
-      color: @lightWords;
-      cursor: not-allowed;
     }
   }
 }

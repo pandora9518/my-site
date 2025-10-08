@@ -1,35 +1,35 @@
 <template>
   <div
+    v-loading="isLoading"
     class="home-container"
     ref="container"
-    v-loading="isLoading"
     @wheel="handleWheel"
   >
     <ul
-      class="carouselitem-container"
+      class="carousel-container"
       :style="{
         marginTop,
       }"
-      @transitionend="handleTransition"
+      @transitionend="handleTransitionEnd"
     >
       <li v-for="item in data" :key="item.id">
-        <Carouselitem :carousel="item" />
+        <CarouselItem :carousel="item" />
       </li>
     </ul>
-    <div class="icon icon-up" v-show="index >= 1" @click="switchTo(index - 1)">
-      <Icon type="arrowUp"></Icon>
+    <div v-show="index >= 1" @click="switchTo(index - 1)" class="icon icon-up">
+      <Icon type="arrowUp" />
     </div>
     <div
-      class="icon icon-down"
       v-show="index < data.length - 1"
       @click="switchTo(index + 1)"
+      class="icon icon-down"
     >
-      <Icon type="arrowDown"></Icon>
+      <Icon type="arrowDown" />
     </div>
     <ul class="indicator">
       <li
         :class="{
-          active: index === i,
+          active: i === index,
         }"
         v-for="(item, i) in data"
         :key="item.id"
@@ -41,36 +41,34 @@
 
 <script>
 import { getBanners } from "@/api/banner";
-import Carouselitem from "./Carouselitem.vue";
+import CarouselItem from "./Carouselitem";
 import Icon from "@/components/Icon";
-import fetchData from "@/mixins/fetchData";
+import fetchData from "@/mixins/fetchData.js";
+
 export default {
+  mixins: [fetchData([])],
   components: {
-    Carouselitem,
+    CarouselItem,
     Icon,
   },
-  mixins: [fetchData([])],
   data() {
     return {
-      index: 0, //当前轮播图索引
-      containerHeight: 0,
-      switching: false,
+      index: 0, // 当前显示的是第几张轮播图
+      containerHeight: 0, // 整个容器的高度
+      switching: false, // 是否正在切换中
     };
+  },
+  mounted() {
+    this.containerHeight = this.$refs.container.clientHeight;
+    window.addEventListener("resize", this.handleResize);
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
   },
   computed: {
     marginTop() {
       return -this.index * this.containerHeight + "px";
     },
-  },
-
-  mounted() {
-    this.containerHeight = this.$refs.container.clientHeight;
-    window.addEventListener("resize", () => {
-      this.containerHeight = this.$refs.container.clientHeight;
-    });
-  },
-  destroyed() {
-    window.removeEventListener("resize");
   },
   methods: {
     switchTo(i) {
@@ -83,22 +81,25 @@ export default {
       if (this.switching) {
         return;
       }
-      if (e.deltaY < -5 && this.index >= 1) {
-        this.switchTo(this.index - 1);
+      if (e.deltaY < -5 && this.index > 0) {
+        // 往上滚动
         this.switching = true;
-      }
-      if (e.deltaY > 5 && this.index < this.data.length - 1) {
-        this.switchTo(this.index + 1);
+        this.index--;
+      } else if (e.deltaY > 5 && this.index < this.data.length - 1) {
+        // 往下滚动
         this.switching = true;
+        this.index++;
       }
     },
-    handleTransition() {
+    handleTransitionEnd() {
       this.switching = false;
+    },
+    handleResize() {
+      this.containerHeight = this.$refs.container.clientHeight;
     },
   },
 };
 </script>
-
 <style lang="less" scoped>
 @import "~@/styles/mixin.less";
 @import "~@/styles/var.less";
@@ -111,74 +112,74 @@ export default {
     margin: 0;
     list-style: none;
     padding: 0;
-    transition: 0.4s;
   }
-  .carouselitem-container {
+}
+.carousel-container {
+  width: 100%;
+  height: 100%;
+  transition: 500ms;
+  li {
     width: 100%;
     height: 100%;
-
-    li {
-      width: 100%;
-      height: 100%;
-    }
   }
-  .icon {
-    cursor: pointer;
-    .self-center();
-    font-size: 20px;
-    @gap: 20px;
-    transform: translateX(-50%);
-    color: #fff;
-    &-up {
-      top: @gap;
-      animation: jump-up 2s infinite;
-    }
-    &-down {
-      bottom: @gap;
-      top: auto;
-      animation: jump-down 2s infinite;
-    }
+}
+.icon {
+  .self-center();
+  font-size: 30px;
+  @gap: 25px;
+  color: @gray;
+  cursor: pointer;
+  transform: translateX(-50%);
+  &.icon-up {
+    top: @gap;
+    animation: jump-up 2s infinite;
+  }
+  &.icon-down {
+    top: auto;
+    bottom: @gap;
+    animation: jump-down 2s infinite;
   }
   @jump: 5px;
   @keyframes jump-up {
     0% {
-      transform: translateY(@jump);
+      transform: translate(-50%, @jump);
     }
     50% {
-      transform: translateY(-@jump);
+      transform: translate(-50%, -@jump);
     }
     100% {
-      transform: translateY(@jump);
+      transform: translate(-50%, @jump);
     }
   }
   @keyframes jump-down {
     0% {
-      transform: translateY(-@jump);
+      transform: translate(-50%, -@jump);
     }
     50% {
-      transform: translateY(@jump);
+      transform: translate(-50%, @jump);
     }
     100% {
-      transform: translateY(-@jump);
+      transform: translate(-50%, -@jump);
     }
   }
-  .indicator {
-    .self-center();
-    transform: translateY(-50%);
-    left: auto;
-    right: 20px;
-    li {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: @words;
-      cursor: pointer;
-      margin-bottom: 10px;
-      border: 1px solid #fff;
-      box-sizing: border-box;
-      &.active {
-        background: #fff;
-      }
+}
+.indicator {
+  .self-center();
+  transform: translateY(-50%);
+  left: auto;
+
+  right: 20px;
+  li {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: @words;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border: 1px solid #fff;
+    box-sizing: border-box;
+    &.active {
+      background: #fff;
     }
   }
 }

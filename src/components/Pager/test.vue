@@ -1,14 +1,15 @@
 <template>
-  <Pager
-    :current="current"
-    :total="total"
-    @pageChange="handlePageChange"
-  ></Pager>
+  <div>
+    <Pager
+      :total="total"
+      :current="current"
+      @pageChange="handlePageChange($event)"
+    />
+  </div>
 </template>
 
 <script>
 import Pager from "./";
-
 export default {
   components: {
     Pager,
@@ -16,12 +17,13 @@ export default {
   data() {
     return {
       current: 1,
-      total: 100,
+      total: 302,
     };
   },
   methods: {
-    handlePageChange(pageNum) {
-      this.current = pageNum;
+    handlePageChange(newPage) {
+      this.current = newPage;
+      console.log("加载当前页数据");
     },
   },
 };

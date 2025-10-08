@@ -6,7 +6,8 @@ import Project from "@/views/Project";
 
 const routes = [
   { name: "About", path: "/about", component: About },
-  { name: "Blog", path: "/blog", component: Blog },
+  { name: "Blog", path: "/article", component: Blog },
+  { name: "CategoryBlog", path: "/article/cate/:categoryId", component: Blog },
   { name: "Home", path: "/", component: Home },
   { name: "Message", path: "/message", component: Message },
   { name: "Project", path: "/project", component: Project },
