@@ -2,7 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import "./styles/global.less";
 import router from "@/router/index.js";
-import showMessage from "@/utils";
+import { showMessage } from "@/utils";
 
 import "@/mock/index.js";
 import Loading from "@/directives/loading.js";

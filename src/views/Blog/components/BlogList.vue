@@ -46,7 +46,7 @@
 import Pager from "@/components/Pager";
 import fetchData from "@/mixins/fetchData.js";
 import { getBlogs } from "@/api/blog.js";
-import formatDate from "@/utils";
+import { formatDate } from "@/utils";
 export default {
   mixins: [fetchData({})],
   components: {
