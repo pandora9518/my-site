@@ -1,14 +1,28 @@
 <template>
-  <div class="blog-list-container" ref="container" v-loading="isLoading">
+  <div class="blog-list-container" ref="mainContainer" v-loading="isLoading">
     <ul>
       <li v-for="item in data.rows" :key="item.id">
         <div class="thumb" v-if="item.thumb">
-          <RouterLink :to="{ name: 'Detail', params: { id: item.id } }">
+          <RouterLink
+            :to="{
+              name: 'BlogDetail',
+              params: {
+                id: item.id,
+              },
+            }"
+          >
             <img :src="item.thumb" :alt="item.title" :title="item.title" />
           </RouterLink>
         </div>
         <div class="main">
-          <RouterLink :to="{ name: 'Detail', params: { id: item.id } }">
+          <RouterLink
+            :to="{
+              name: 'BlogDetail',
+              params: {
+                id: item.id,
+              },
+            }"
+          >
             <h2>{{ item.title }}</h2>
           </RouterLink>
           <div class="aside">
@@ -18,11 +32,13 @@
             <RouterLink
               :to="{
                 name: 'CategoryBlog',
-                params: { categoryId: item.category.id },
+                params: {
+                  categoryId: item.category.id,
+                },
               }"
-              class=""
-              >{{ item.category.name }}</RouterLink
             >
+              {{ item.category.name }}
+            </RouterLink>
           </div>
           <div class="desc">
             {{ item.description }}
@@ -52,6 +68,10 @@ export default {
   components: {
     Pager,
   },
+  mounted() {
+    this.$bus.$on("setMainScroll", this.handleSetMainScroll);
+    this.$refs.mainContainer.addEventListener("scroll", this.handleScroll);
+  },
   computed: {
     // 获取路由信息
     routeInfo() {
@@ -64,6 +84,11 @@ export default {
         limit,
       };
     },
+  },
+  beforeDestroy() {
+    this.$bus.$emit("mainScroll");
+    this.$refs.mainContainer.removeEventListener("scroll", this.handleScroll);
+    this.$bus.$off("setMainScroll", this.handleSetMainScroll);
   },
   methods: {
     formatDate,
@@ -97,6 +122,12 @@ export default {
           },
         });
       }
+    },
+    handleScroll() {
+      this.$bus.$emit("mainScroll", this.$refs.mainContainer);
+    },
+    handleSetMainScroll(scrollTop) {
+      this.$refs.mainContainer.scrollTop = scrollTop;
     },
   },
   watch: {

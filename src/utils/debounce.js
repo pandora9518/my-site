@@ -1,9 +1,9 @@
 export default function (fn, duration) {
   let timer = null;
-  return () => {
+  return (...args) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      fn();
+      fn(...args);
     }, duration);
   };
 }

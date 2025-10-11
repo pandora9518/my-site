@@ -58,7 +58,10 @@ export default {
     handleSelect(item) {
       location.hash = item.anchor;
     },
-    setSelect() {
+    setSelect(scrollDom) {
+      if (!scrollDom) {
+        return;
+      }
       this.activeAnchor = "";
       const range = 200;
       for (const dom of this.doms) {

@@ -2,9 +2,7 @@
   <Layout>
     <BlogList />
     <template #right>
-      <div>
-        <BlogCategory />
-      </div>
+      <BlogCategory />
     </template>
   </Layout>
 </template>
