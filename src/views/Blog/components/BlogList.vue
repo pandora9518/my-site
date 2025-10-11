@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-list-container" ref="mainContainer" v-loading="isLoading">
+  <div class="blog-list-container" ref="container" v-loading="isLoading">
     <ul>
       <li v-for="item in data.rows" :key="item.id">
         <div class="thumb" v-if="item.thumb">
@@ -60,17 +60,14 @@
 
 <script>
 import Pager from "@/components/Pager";
+import mainScroll from "@/mixins/mainScroll";
 import fetchData from "@/mixins/fetchData.js";
 import { getBlogs } from "@/api/blog.js";
 import { formatDate } from "@/utils";
 export default {
-  mixins: [fetchData({})],
+  mixins: [fetchData({}), mainScroll("container")],
   components: {
     Pager,
-  },
-  mounted() {
-    this.$bus.$on("setMainScroll", this.handleSetMainScroll);
-    this.$refs.mainContainer.addEventListener("scroll", this.handleScroll);
   },
   computed: {
     // 获取路由信息
@@ -85,11 +82,7 @@ export default {
       };
     },
   },
-  beforeDestroy() {
-    this.$bus.$emit("mainScroll");
-    this.$refs.mainContainer.removeEventListener("scroll", this.handleScroll);
-    this.$bus.$off("setMainScroll", this.handleSetMainScroll);
-  },
+
   methods: {
     formatDate,
     async fetchData() {
@@ -122,12 +115,6 @@ export default {
           },
         });
       }
-    },
-    handleScroll() {
-      this.$bus.$emit("mainScroll", this.$refs.mainContainer);
-    },
-    handleSetMainScroll(scrollTop) {
-      this.$refs.mainContainer.scrollTop = scrollTop;
     },
   },
   watch: {
