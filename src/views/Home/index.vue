@@ -1,6 +1,6 @@
 <template>
   <div
-    v-loading="isLoading"
+    v-loading="loading"
     class="home-container"
     ref="container"
     @wheel="handleWheel"
@@ -43,10 +43,8 @@
 import { getBanners } from "@/api/banner";
 import CarouselItem from "./Carouselitem";
 import Icon from "@/components/Icon";
-import fetchData from "@/mixins/fetchData.js";
-
+import { mapState } from "vuex";
 export default {
-  mixins: [fetchData([])],
   components: {
     CarouselItem,
     Icon,
@@ -65,10 +63,14 @@ export default {
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
   },
+  created() {
+    this.$store.dispatch("banner/fetchBanner");
+  },
   computed: {
     marginTop() {
       return -this.index * this.containerHeight + "px";
     },
+    ...mapState("banner", ["loading", "data"]),
   },
   methods: {
     switchTo(i) {

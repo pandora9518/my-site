@@ -5,8 +5,7 @@ import defaultImg from "@/assets/default.gif";
 let imgs = [];
 function setImage(img) {
   img.dom.src = defaultImg;
-  //这里对图片进行处理
-  //判断元素是否在视口中
+
   const clientHeight = document.documentElement.clientHeight;
   const rect = img.dom.getBoundingClientRect();
   if (rect.bottom >= 0 && rect.top <= clientHeight) {

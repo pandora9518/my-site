@@ -4,6 +4,7 @@ import "./styles/global.less";
 import router from "@/router/index.js";
 import "@/mock/index.js";
 import "./eventBus";
+import store from "@/store"
 import { showMessage } from "@/utils";
 Vue.prototype.$showMessage = showMessage;
 
@@ -15,5 +16,6 @@ Vue.directive("lazy", lazy);
 
 new Vue({
   router,
+  store,
   render: (h) => h(App),
 }).$mount("#app");
