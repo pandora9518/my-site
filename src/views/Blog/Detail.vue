@@ -20,7 +20,7 @@ import Layout from "@/components/Layout";
 import BlogDetail from "./components/BlogDetail";
 import BlogTOC from "./components/BlogTOC";
 import BlogComment from "./components/BlogComment";
-
+import { titleController } from "@/utils";
 export default {
   components: {
     Layout,
@@ -31,7 +31,11 @@ export default {
   mixins: [fetchData(null), mainScroll("mainContainer")],
   methods: {
     async fetchData() {
-      return await getBlog(this.$route.params.id);
+      const resp = await getBlog(this.$route.params.id);
+      if (resp.title) {
+        titleController.setSiteTitle(resp.title);
+      }
+      return resp;
     },
   },
   updated() {

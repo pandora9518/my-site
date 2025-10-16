@@ -5,3 +5,5 @@ export { default as getComponentRootDom } from "./getComponentRootDom";
 export { default as formatDate } from "./formatDate.js";
 
 export { default as debounce } from "./debounce.js";
+
+export { default as titleController } from "./titleController.js";
