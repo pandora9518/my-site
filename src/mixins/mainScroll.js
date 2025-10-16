@@ -1,19 +1,19 @@
 export default function (refValue) {
   return {
     mounted() {
-      this.$bus.$on("setMainScroll", this.setMainScroll);
-      this.$refs[refValue].addEventListener("scroll", this.handleScroll);
+      this.$bus.$on("setMainScroll", this.handleSetMainScroll);
+      this.$refs[refValue].addEventListener("scroll", this.handleMainScroll);
     },
     beforeDestroy() {
       this.$bus.$emit("mainScroll");
-      this.$bus.$off("setMainScroll", this.setMainScroll);
-      this.$refs[refValue].removeEventListener("scroll", this.handleScroll);
+      this.$bus.$off("setMainScroll", this.handleSetMainScroll);
+      this.$refs[refValue].removeEventListener("scroll", this.handleMainScroll);
     },
     methods: {
-      handleScroll() {
+      handleMainScroll() {
         this.$bus.$emit("mainScroll", this.$refs[refValue]);
       },
-      setMainScroll(scrollTop) {
+      handleSetMainScroll(scrollTop) {
         this.$refs[refValue].scrollTop = scrollTop;
       },
     },
