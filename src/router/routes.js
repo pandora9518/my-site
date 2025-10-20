@@ -1,6 +1,6 @@
 import "nprogress/nprogress.css";
 import { start, done, configure } from "nprogress";
-
+import NotFound from "@/views/NotFound.vue";
 configure({
   trickleSpeed: 20,
   showSpinner: false,
@@ -97,5 +97,12 @@ export default [
       title: "留言板",
     },
   },
+  {
+    name: "NotFound",
+    path: "*",
+    component: NotFound,
+    meta: {
+      title: "页面未找到",
+    },
+  },
 ];
-
