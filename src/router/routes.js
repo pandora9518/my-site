@@ -1,15 +1,48 @@
-import About from "@/views/About";
-import Blog from "@/views/Blog";
-import Home from "@/views/Home";
-import Message from "@/views/Message";
-import Project from "@/views/Project";
-import Detail from "@/views/Blog/Detail";
+import "nprogress/nprogress.css";
+import { start, done, configure } from "nprogress";
 
-const routes = [
+configure({
+  trickleSpeed: 20,
+  showSpinner: false,
+});
+
+function delay(duration) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, duration);
+  });
+}
+
+function getPageComponent(pageCompResolver) {
+  return async () => {
+    start();
+    if (process.env.NODE_ENV === "development") {
+      await delay(2000);
+    }
+    const comp = await pageCompResolver();
+    done();
+    return comp;
+  };
+}
+
+export default [
+  {
+    name: "Home",
+    path: "/",
+    component: getPageComponent(() =>
+      import(/* webpackChunkName: "home" */ "@/views/Home")
+    ),
+    meta: {
+      title: "首页",
+    },
+  },
   {
     name: "About",
     path: "/about",
-    component: About,
+    component: getPageComponent(() =>
+      import(/* webpackChunkName: "about" */ "@/views/About")
+    ),
     meta: {
       title: "关于我",
     },
@@ -17,7 +50,9 @@ const routes = [
   {
     name: "Blog",
     path: "/article",
-    component: Blog,
+    component: getPageComponent(() =>
+      import(/* webpackChunkName: "blog" */ "@/views/Blog")
+    ),
     meta: {
       title: "文章",
     },
@@ -25,7 +60,9 @@ const routes = [
   {
     name: "CategoryBlog",
     path: "/article/cate/:categoryId",
-    component: Blog,
+    component: getPageComponent(() =>
+      import(/* webpackChunkName: "blog" */ "@/views/Blog")
+    ),
     meta: {
       title: "文章",
     },
@@ -33,34 +70,32 @@ const routes = [
   {
     name: "BlogDetail",
     path: "/article/:id",
-    component: Detail,
+    component: getPageComponent(() =>
+      import(/* webpackChunkName: "blogdetail" */ "@/views/Blog/Detail")
+    ),
     meta: {
       title: "文章详情",
     },
   },
   {
-    name: "Home",
-    path: "/",
-    component: Home,
+    name: "Project",
+    path: "/project",
+    component: getPageComponent(() =>
+      import(/* webpackChunkName: "project" */ "@/views/Project")
+    ),
     meta: {
-      title: "首页",
+      title: "项目&效果",
     },
   },
   {
     name: "Message",
     path: "/message",
-    component: Message,
+    component: getPageComponent(() =>
+      import(/* webpackChunkName: "message" */ "@/views/Message")
+    ),
     meta: {
       title: "留言板",
     },
   },
-  {
-    name: "Project",
-    path: "/project",
-    component: Project,
-    meta: {
-      title: "项目&效果",
-    },
-  },
 ];
-export default routes;
+
